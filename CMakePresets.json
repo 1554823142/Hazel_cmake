@@ -1,0 +1,23 @@
+﻿{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "vs2022-x64-release",
+      "displayName": "VS2022 x64 Release",
+      "generator": "Visual Studio 17 2022",
+      "architecture": "x64",
+      "binaryDir": "${sourceDir}/build",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "vs2022-x64-release-build",
+      "configurePreset": "vs2022-x64-release",
+      "displayName": "Build Release (x64)",
+      "configuration": "Release"
+    }
+  ]
+}
