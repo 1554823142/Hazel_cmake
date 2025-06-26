@@ -1,35 +1,43 @@
-cmake_minimum_required(VERSION 3.15)
+ï»¿cmake_minimum_required(VERSION 3.15)
 project(Hazel LANGUAGES CXX)
 
-# 1. ÉèÖÃ¶¯Ì¬¿âÑ¡Ïî
+# 1. è®¾ç½®åŠ¨æ€åº“é€‰é¡¹
 option(Hazel_SHARED "Build Hazel as a shared library (DLL)" ON)
 
-# ÊÕ¼¯ËùÓĞÔ´ÎÄ¼ş
+# æ”¶é›†æ‰€æœ‰æºæ–‡ä»¶
 file(GLOB_RECURSE SOURCES 
     "src/*.cpp"
     "src/Hazel/*.cpp"
 )
 
-# ´´½¨¿âÄ¿±ê
+# åˆ›å»ºåº“ç›®æ ‡
 add_library(Hazel SHARED ${SOURCES})
 
-# WindowsÆ½Ì¨ÌØ¶¨ÉèÖÃ
+# MSVC: å¼ºåˆ¶ä½¿ç”¨ UTF-8 ç¼–ç 
+target_compile_options(Hazel PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
+
+# Windowså¹³å°ç‰¹å®šè®¾ç½®
 if(WIN32)
-    target_compile_definitions(Hazel PRIVATE HZ_PLATFORM_WINDOWS)
+    target_compile_definitions(Hazel PUBLIC HZ_PLATFORM_WINDOWS)
+	message("current platform: Windows ")
+elseif(UNIX)
+    target_compile_definitions(Hazel PUBLIC HZ_PLATFORM_LINUX)
+	message("current platform: Linux ")
 endif()
 
-# ¹Ø¼üµÄÍ·ÎÄ¼ş°üº¬Â·¾¶ÉèÖÃ
+# å…³é”®çš„å¤´æ–‡ä»¶åŒ…å«è·¯å¾„è®¾ç½®
 target_include_directories(Hazel PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>  # ÎªÁËÕÒµ½Hazel.h
-    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/Hazel>  # ÎªÁËÕÒµ½Hazel/×ÓÄ¿Â¼ÏÂµÄÍ·ÎÄ¼ş
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>  # ä¸ºäº†æ‰¾åˆ°Hazel.h
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/Hazel>  # ä¸ºäº†æ‰¾åˆ°Hazel/å­ç›®å½•ä¸‹çš„å¤´æ–‡ä»¶
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/include>
     $<INSTALL_INTERFACE:include>
 )
 
-# DLLµ¼³ö¶¨Òå
+# DLLå¯¼å‡ºå®šä¹‰
 target_compile_definitions(Hazel PRIVATE HAZEL_BUILD_DLL)
 
-# Êä³öÂ·¾¶ÉèÖÃ
+# è¾“å‡ºè·¯å¾„è®¾ç½®
 set_target_properties(Hazel PROPERTIES
     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Sandbox/lib
     ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Sandbox/lib

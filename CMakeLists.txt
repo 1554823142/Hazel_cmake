@@ -4,4 +4,3 @@ project(GM_HAZEL)
 
 add_subdirectory(Hazel)
 add_subdirectory(Sandbox)
-

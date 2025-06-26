@@ -17,6 +17,6 @@ namespace Hazel {
 	};
 
 
-	// ÉùÃ÷¹¤³§º¯Êı£¨Ğèµ¥¶Àµ¼³ö£©
-	extern HAZEL_API Application* CreateApplication();
+	// å£°æ˜å·¥å‚å‡½æ•°ï¼ˆéœ€å•ç‹¬å¯¼å‡ºï¼‰
+	Application* CreateApplication();
 }

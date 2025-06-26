@@ -1,23 +1,26 @@
 ﻿{
-  "version": 3,
-  "configurePresets": [
+  "configurations": [
     {
-      "name": "vs2022-x64-release",
-      "displayName": "VS2022 x64 Release",
+      "name": "x64-Release",
       "generator": "Visual Studio 17 2022",
-      "architecture": "x64",
-      "binaryDir": "${sourceDir}/build",
-      "cacheVariables": {
-        "CMAKE_BUILD_TYPE": "Release"
-      }
-    }
-  ],
-  "buildPresets": [
+      "configurationType": "Release",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\build",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "-A x64",
+      "buildCommandArgs": "--config Release",
+      "ctestCommandArgs": ""
+    },
     {
-      "name": "vs2022-x64-release-build",
-      "configurePreset": "vs2022-x64-release",
-      "displayName": "Build Release (x64)",
-      "configuration": "Release"
+      "name": "x64-Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "buildRoot": "${projectDir}\\build-debug",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "",
+      "ctestCommandArgs": ""
     }
   ]
 }
