@@ -1,6 +1,7 @@
 ﻿cmake_minimum_required(VERSION 3.15)
 project(Hazel LANGUAGES CXX)
 
+
 # 1. 设置动态库选项
 option(Hazel_SHARED "Build Hazel as a shared library (DLL)" ON)
 
@@ -12,6 +13,9 @@ file(GLOB_RECURSE SOURCES
 
 # 创建库目标
 add_library(Hazel SHARED ${SOURCES})
+
+# 添加 GLFW 子目录
+add_subdirectory(vendor/GLFW)
 
 # MSVC: 强制使用 UTF-8 编码
 target_compile_options(Hazel PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
@@ -32,8 +36,14 @@ target_include_directories(Hazel PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/Hazel>  # 为了找到Hazel/子目录下的头文件
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/Hazel/Events>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/GLFW/include>
     $<INSTALL_INTERFACE:include>
 )
+
+target_link_libraries(Hazel PUBLIC 
+        glfw
+        opengl32            # 链接OpenGL库
+        )       
 
 # DLL导出定义
 target_compile_definitions(Hazel PRIVATE HAZEL_BUILD_DLL)
