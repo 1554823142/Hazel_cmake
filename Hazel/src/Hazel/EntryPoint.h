@@ -1,6 +1,6 @@
 #pragma once
 
-#define HZ_PLATFORM_WINDOWS
+//#define HZ_PLATFORM_WINDOWS
 
 #ifdef HZ_PLATFORM_WINDOWS
 

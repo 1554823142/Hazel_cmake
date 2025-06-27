@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Core.h"
-#include <iostream>
+
 
 namespace Hazel {
 	class HAZEL_API Application {
@@ -9,11 +9,7 @@ namespace Hazel {
 		Application();
 		virtual ~Application();
 
-		void Run()
-		{
-			std::cout << "Hello Hazel!\n";
-			while(1);
-		}
+		void Run();
 	};
 
 

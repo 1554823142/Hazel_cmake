@@ -30,6 +30,7 @@ target_include_directories(Hazel PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src>  # 为了找到Hazel.h
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/Hazel>  # 为了找到Hazel/子目录下的头文件
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/Hazel/Events>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/include>
     $<INSTALL_INTERFACE:include>
 )
@@ -43,3 +44,8 @@ set_target_properties(Hazel PROPERTIES
     ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Sandbox/lib
     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/Sandbox/lib
 )
+
+
+# 预编译头文件
+target_precompile_headers(Hazel PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/hzpch.h)
