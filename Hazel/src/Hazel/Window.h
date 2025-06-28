@@ -28,7 +28,7 @@ namespace Hazel {
 	{
 	public:
 
-    // call back function
+    // call back function, 用于事件处理
 		using EventCallbackFn = std::function<void(Event&)>;
 
 		virtual ~Window() {}
@@ -44,7 +44,7 @@ namespace Hazel {
 		virtual bool IsVSync() const = 0;
 
 
-        // 在各个平台小徐需要实现的函数
+        // 在各个平台上需要实现的函数, 静态方法用于创建窗口. 会根据平台不同返回不同的窗口实现
 		static Window* Create(const WindowProps& props = WindowProps());
 	};
 

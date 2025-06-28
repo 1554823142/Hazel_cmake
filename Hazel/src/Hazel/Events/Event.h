@@ -65,11 +65,14 @@ namespace Hazel {
 		}
 
 		template<typename T>
-		bool Dispatch(EventFn<T> func)
+		bool Dispatch(EventFn<T> func)		// 传入一个处理特定事件的回调函数func
 		{
 			if (m_Event.GetEventType() == T::GetStaticType())
 			{
-				m_Event.m_Handled = func(*(T*)&m_Event);
+				// 关于下面这行代码
+				// (T*)&m_Event:将Event* 强制转为T*, 确保 m_Event 实际上就是 T 类型
+				// *(T*)&m_Event : 得到T&
+				m_Event.m_Handled = func(*(T*)&m_Event);		// 调用回调函数并返回结果
 				return true;
 			}
 			return false;

@@ -2,6 +2,8 @@
 
 这是[Game Engine - YouTube](https://www.youtube.com/playlist?list=PLlrATfBNZ98dC-V-N3m0Go4deliWHPFwT)的cmake版本, 不知道能不能坚持下去, 反正用CMake确实很难受, 不像VS那么轮椅
 
+好的一点就是可以避免一些出现在VS上的一些奇怪的问题, 这也给了我一些慰藉
+
 
 
 ## 编译指令
