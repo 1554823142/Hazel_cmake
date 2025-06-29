@@ -14,18 +14,35 @@ namespace Hazel {
 
     Application::Application() {
         m_Window = std::unique_ptr<Window>(Window::Create());   // 单例模式
-        m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));
+        m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));     // 回调Application的OnEvent函数
     }
 
     Application::~Application() {
         // 可以留空
     }
+
+    void Application::PushLayer(Layer* layer)
+    {
+        m_LayerStack.PushLayer(layer);
+    }
+
+    void Application::PushOverLayer(Layer* layer)
+    {   
+        m_LayerStack.PushOverlay(layer);
+    }
+
+
     void Application::Run()
     {     
         while(m_Running){
             glClearColor(1, 0, 1, 1);
             glClear(GL_COLOR_BUFFER_BIT);
-            m_Window->OnUpdate();
+            
+            for(Layer* layer : m_LayerStack){
+                layer->OnUpdate();
+            }
+
+            m_Window->OnUpdate();           // 这是可以处理窗口事件输入的OnUpdate
         }
     }
 
@@ -35,11 +52,20 @@ namespace Hazel {
 
         dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
 
-        HZ_CORE_TRACE("{0}", e.ToString());
+        for(auto it = m_LayerStack.end(); it != m_LayerStack.begin(); ){
+            (*--it)->OnEvent(e);        // Application的OnEvent将事件传递给Application所有的Layer层的OnEvent
+            if(e.Handled)       // 如果OverLayer处理了此事件, 就不再继续, 即**拦截**
+                break;
+        }
     }
+
+
     bool Application::OnWindowClose(WindowCloseEvent &e)
     {
         m_Running = false;
         return true;
     }
+
+
+    
 }

@@ -1,5 +1,6 @@
 #pragma once
 
+#include "hzpch.h"
 #include "Hazel/Core.h"
 
 
@@ -41,6 +42,10 @@ namespace Hazel {
 	{
 		friend class EventDispatcher;
 	public:
+
+
+		bool Handled = false;			// 定义为public, 事件是否被处理完
+
 		virtual EventType GetEventType() const = 0;
 		virtual const char* GetName() const = 0;
 		virtual int GetCategoryFlags() const = 0;
@@ -50,8 +55,7 @@ namespace Hazel {
 		{
 			return GetCategoryFlags() & category;
 		}
-	protected:
-		bool m_Handled = false;
+		
 	};
 
 	class EventDispatcher
@@ -72,7 +76,7 @@ namespace Hazel {
 				// 关于下面这行代码
 				// (T*)&m_Event:将Event* 强制转为T*, 确保 m_Event 实际上就是 T 类型
 				// *(T*)&m_Event : 得到T&
-				m_Event.m_Handled = func(*(T*)&m_Event);		// 调用回调函数并返回结果
+				m_Event.Handled = func(*(T*)&m_Event);		// 调用回调函数并返回结果
 				return true;
 			}
 			return false;
