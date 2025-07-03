@@ -5,6 +5,8 @@
 #include "Hazel/Events/ApplicationEvent.h"
 
 #include <Hazel/Log.h>
+#include <GLAD/glad.h>
+// #include <GLFW/glfw3.h>
 
 namespace Hazel {
 	
@@ -50,6 +52,11 @@ namespace Hazel {
 
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);		// 将刚刚创建的窗口的OpenGL上下文设置为当前线程的上下文。
+		
+		// 增加glad loader
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		HZ_CORE_ASSERT(status, "Failed to initialize GLAD");
+		
 		glfwSetWindowUserPointer(m_Window, &m_Data);		// m_Data为数据指针, 可以存储任意的数据, GLFW的回调函数可以通过这个指针获取到与窗口有关的数据
 		SetVSync(true);			// 设置窗口的垂直同步（VSync）为开启状态
 

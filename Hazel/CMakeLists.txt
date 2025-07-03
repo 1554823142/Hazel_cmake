@@ -17,15 +17,21 @@ add_library(Hazel SHARED ${SOURCES})
 # 添加 GLFW 子目录
 add_subdirectory(vendor/GLFW)
 
+add_subdirectory(vendor/GLAD)
+
 # MSVC: 强制使用 UTF-8 编码
 target_compile_options(Hazel PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
 # Windows平台特定设置
 if(WIN32)
-    target_compile_definitions(Hazel PUBLIC HZ_PLATFORM_WINDOWS)
+    target_compile_definitions(Hazel PUBLIC 
+    HZ_PLATFORM_WINDOWS
+    GLFW_INCLUDE_NONE)
 	message("current platform: Windows ")
 elseif(UNIX)
-    target_compile_definitions(Hazel PUBLIC HZ_PLATFORM_LINUX)
+    target_compile_definitions(Hazel PUBLIC 
+    HZ_PLATFORM_LINUX
+    GLFW_INCLUDE_NONE)
 	message("current platform: Linux ")
 endif()
 
@@ -37,10 +43,12 @@ target_include_directories(Hazel PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/src/Hazel/Events>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/GLFW/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/GLAD/include>
     $<INSTALL_INTERFACE:include>
 )
 
 target_link_libraries(Hazel PUBLIC 
+        glad        
         glfw
         opengl32            # 链接OpenGL库
         )       
