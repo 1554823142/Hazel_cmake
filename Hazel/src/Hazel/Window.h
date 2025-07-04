@@ -43,6 +43,9 @@ namespace Hazel {
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
 
+		// 获取原生窗口句柄
+		virtual void* GetNativeWindow() const = 0;
+
 
         // 在各个平台上需要实现的函数, 静态方法用于创建窗口. 会根据平台不同返回不同的窗口实现
 		static Window* Create(const WindowProps& props = WindowProps());

@@ -9,17 +9,19 @@ set(MYLIB_DLL ${CMAKE_SOURCE_DIR}/Sandbox/lib/Release/dllgen.dll)
 
 
 # 添加可执行程序
-add_executable(Sandbox ./src/SandboxApp.cpp)
+add_executable(Sandbox 
+    ./src/SandboxApp.cpp
+)
 
 # MSVC: 强制使用 UTF-8 编码
 target_compile_options(Sandbox PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
 # Windows平台特定设置
 if(WIN32)
-    target_compile_definitions(Hazel PUBLIC HZ_PLATFORM_WINDOWS)
+    target_compile_definitions(Sandbox PUBLIC HZ_PLATFORM_WINDOWS)
 	message("current platform: Windows ")
 elseif(UNIX)
-    target_compile_definitions(Hazel PUBLIC HZ_PLATFORM_LINUX)
+    target_compile_definitions(Sandbox PUBLIC HZ_PLATFORM_LINUX)
 	message("current platform: Linux ")
 endif()
 

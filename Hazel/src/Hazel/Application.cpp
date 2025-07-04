@@ -5,7 +5,7 @@
 // #include <GLFW/glfw3.h>
 namespace Hazel {
 
-
+    Application* Application::s_Instance = nullptr;
 // std::bind:
 // p1: 类成员函数指针
 // p2: 类对象地址
@@ -13,6 +13,10 @@ namespace Hazel {
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
     Application::Application() {
+
+        HZ_ASSERT(!s_Instance, "Application already exists!");
+
+        s_Instance = this;
         m_Window = std::unique_ptr<Window>(Window::Create());   // 单例模式
         m_Window->SetEventCallback(BIND_EVENT_FN(OnEvent));     // 回调Application的OnEvent函数
 
@@ -27,11 +31,13 @@ namespace Hazel {
     void Application::PushLayer(Layer* layer)
     {
         m_LayerStack.PushLayer(layer);
+        layer->OnAttach();
     }
 
     void Application::PushOverLayer(Layer* layer)
     {   
         m_LayerStack.PushOverlay(layer);
+        layer->OnAttach();
     }
 
 
@@ -43,6 +49,11 @@ namespace Hazel {
             
             for(Layer* layer : m_LayerStack){
                 layer->OnUpdate();
+            }
+
+            // ImGui渲染
+            for(Layer* layer : m_LayerStack){
+                layer->OnImGuiRender();
             }
 
             m_Window->OnUpdate();           // 这是可以处理窗口事件输入的OnUpdate

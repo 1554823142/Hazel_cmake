@@ -19,6 +19,8 @@ add_subdirectory(vendor/GLFW)
 
 add_subdirectory(vendor/GLAD)
 
+add_subdirectory(vendor/imgui)
+
 # MSVC: 强制使用 UTF-8 编码
 target_compile_options(Hazel PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
@@ -44,6 +46,7 @@ target_include_directories(Hazel PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/GLFW/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/GLAD/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui>
     $<INSTALL_INTERFACE:include>
 )
 
@@ -51,6 +54,7 @@ target_link_libraries(Hazel PUBLIC
         glad        
         glfw
         opengl32            # 链接OpenGL库
+        ImGui              # 链接ImGui库
         )       
 
 # DLL导出定义

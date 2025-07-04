@@ -53,7 +53,7 @@ namespace Hazel {
 		m_Window = glfwCreateWindow((int)props.Width, (int)props.Height, m_Data.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(m_Window);		// 将刚刚创建的窗口的OpenGL上下文设置为当前线程的上下文。
 		
-		// 增加glad loader
+		// 增加glad loader(glad的核心功能)
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		HZ_CORE_ASSERT(status, "Failed to initialize GLAD");
 		
