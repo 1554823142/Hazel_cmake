@@ -43,7 +43,7 @@ namespace Hazel {
 		virtual void SetVSync(bool enabled) = 0;
 		virtual bool IsVSync() const = 0;
 
-		// 获取原生窗口句柄
+		// 获取原生窗口句柄(GLFWWindow)
 		virtual void* GetNativeWindow() const = 0;
 
 
