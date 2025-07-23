@@ -57,8 +57,8 @@ namespace Hazel {
                 layer->OnImGuiRender();
             }
             
-            auto [x, y] = Input::GetMousePosition();
-            HZ_CORE_TRACE("{0}, {1}", x, y);
+            // auto [x, y] = Input::GetMousePosition();
+            // HZ_CORE_TRACE("{0}, {1}", x, y);
             m_Window->OnUpdate();           // 这是可以处理窗口事件输入的OnUpdate
         }
     }
