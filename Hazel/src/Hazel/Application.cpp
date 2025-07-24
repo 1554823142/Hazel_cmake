@@ -4,6 +4,7 @@
 #include "Input.h"
 #include <glad/glad.h>
 // #include <GLFW/glfw3.h>
+#include "glm/glm.hpp"
 namespace Hazel {
 
     Application* Application::s_Instance = nullptr;

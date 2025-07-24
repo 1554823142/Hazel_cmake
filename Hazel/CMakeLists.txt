@@ -24,6 +24,8 @@ add_subdirectory(vendor/GLAD)
 
 add_subdirectory(vendor/imgui)
 
+add_subdirectory(vendor/glm)
+
 # MSVC: 强制使用 UTF-8 编码
 target_compile_options(Hazel PRIVATE "$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
@@ -50,6 +52,10 @@ target_include_directories(Hazel PUBLIC
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/GLFW/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/GLAD/include>
     $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui>
+    # $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/glm/**.hpp>
+    # $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/glm/**.iln>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm>
+    # $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/glm>
     $<INSTALL_INTERFACE:include>
 )
 
